@@ -1,7 +1,7 @@
 import joblib
 import re
 from __Parameters import *
-from __Data_process import modify_special_location, get_lat_lon, check_patient_location
+from __Data_process import modify_special_location, get_lat_lon, modify_wrong_lat_lon
 
 
 # wrong_idx = [10, 36, 43, 48, 52, 55, 64, 80, 84, 90, 96, 104, 116,
@@ -28,6 +28,7 @@ for key, val in patient_idx_info.items():
     temp_idx = val[LOCATION_INFO_IDX].find('在')
     if temp_idx != -1:
         val[LOCATION_INFO_IDX] = val[LOCATION_INFO_IDX][:temp_idx]
+
 modify_special_location(patient_idx_info)
 joblib.dump(patient_idx_info, './patient/' + 'patient_idx_info.pkl')
 
@@ -40,5 +41,7 @@ for key, val in patient_idx_info.items():
         lat_lon_list.reverse()
         patient_idx_lat_lon[key] = lat_lon_list
         print('patient', key, '|', 'location', lat_lon_list)
+
+modify_wrong_lat_lon(patient_idx_lat_lon)
 joblib.dump(patient_idx_lat_lon, './patient/' + 'patient_idx_lat_lon.pkl')
 
