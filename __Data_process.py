@@ -22,6 +22,11 @@ def check_patient_lat_lon(patient_idx_lat_lon):
         print('patient', key, '|', 'location', val)
 
 
+def check_date_num(date_num):
+    for key, val in date_num.items():
+        print('data', key, '|', 'num', val)
+
+
 # chinese
 def parse_zhch(s):
     return str(str(s).encode('ascii', 'xmlcharrefreplace'))[2:-1]
@@ -37,6 +42,10 @@ def get_lat_lon(address):
         return lat_lon
     except:
         return ''
+
+
+def get_sick_time():
+    pass
 
 
 def get_min_val(set_idx):
