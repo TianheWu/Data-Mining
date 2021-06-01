@@ -76,6 +76,13 @@ def visualization_kmeans(x, y, k_means):
     centers = k_means.cluster_centers_
     plt.scatter(centers[:, 0], centers[:, 1], c='red', s=20, alpha=0.5)
     plt.savefig('./figure/map_KMeans.png')
+
+
+def visualization_acc(pred_test, train_data):
+    plt.plot(pred_test, 'r', label='prediction')
+    plt.plot(train_data, 'b', label='real')
+    plt.legend(loc='best')
+    plt.savefig('./figure/acc.png')
     
 
 # if __name__ == '__main__':
