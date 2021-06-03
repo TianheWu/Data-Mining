@@ -12,7 +12,7 @@ map_covid = folium.Map(
     location = [CHOOSED_LAT, CHOOSED_LON],
     zoom_start = 13
 )
-# incidents = plugins.MarkerCluster().add_to(map_covid)
+incidents = plugins.MarkerCluster().add_to(map_covid)
 
 patient_idx_lat_lon = joblib.load('./patient/patient_idx_lat_lon.pkl')
 patient_idx_type = joblib.load('./patient/patient_idx_type.pkl')
@@ -45,7 +45,7 @@ for key, val in patient_idx_lat_lon.items():
         flag_extremum = True
 
     circle_color = get_type_icon_color(patient_idx_type[key])
-    add_circle([val[LAT_IDX], val[LON_IDX]], int(key), circle_color, 10, companent=map_covid)
+    add_circle([val[LAT_IDX], val[LON_IDX]], int(key), circle_color, 10, companent=incidents)
     # point_color = get_type_icon_color(patient_idx_type[key])
     if flag_extremum:
         add_point([val[LAT_IDX], val[LON_IDX]], int(key), extremum_color, companent=map_covid)
@@ -71,6 +71,6 @@ for center in location_centers:
 #         temp_location = numpy.array(patient_idx_lat_lon[str(i)]).reshape(1, 2)
 #         locations = numpy.concatenate((locations, temp_location), axis=0)
 #     add_line(locations, 'red', map_covid)
-    
-# map_covid.add_child(incidents)
-map_covid.save('./figure/map_covid.html')
+
+map_covid.add_child(incidents)
+map_covid.save('./figure/map_covid_2.html')

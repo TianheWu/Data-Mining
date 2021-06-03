@@ -1,8 +1,13 @@
 import folium
+import joblib
 
 from __Parameters import *
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import MultipleLocator
+from pyecharts.charts import Bar
+from pyecharts.charts import Line
+from pyecharts import options as opts
+from pyecharts.charts import Pie
 
 
 def get_type_icon_color(type):
@@ -83,10 +88,40 @@ def visualization_acc(pred_test, train_data):
     plt.plot(train_data, 'b', label='real')
     plt.legend(loc='best')
     plt.savefig('./figure/acc.png')
-    
 
-# if __name__ == '__main__':
-#     new_color = '#FF0000'
-#     for i in range(870):
-#         new_color = color_select(new_color)
-#         print(new_color)
+
+def plot_line_picture(x_info, y_info):
+    line_plot = (
+        Line()
+        .add_xaxis(x_info)
+        .add_yaxis('People num', y_info, is_smooth=True, 
+                    linestyle_opts=opts.LineStyleOpts(color='red', width=4),
+                    markline_opts=opts.MarkLineOpts(data=[opts.MarkLineItem(type_='average')]))
+        .set_global_opts(title_opts=opts.TitleOpts(title='Line of the number in the epidemic', subtitle="2020 year", 
+    )))
+    line_plot.render(path='./figure/num_line.html')
+
+
+def plot_pie_charts(data):
+    pie = Pie()
+    pie.add(
+        series_name="Number",
+        data_pair=data,
+        radius=["30%", "70%"],
+    )
+    pie.set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {d}%"))
+    pie.set_global_opts(title_opts=opts.TitleOpts(title="Distribution of people"))
+    pie.render_notebook()
+    pie.render(path='./figure/pie.html')
+
+
+if __name__ == '__main__':
+    patient_type_idx = joblib.load('./patient/patient_type_idx.pkl')
+    type_num = {0:0, 1:0, 2:0, 3:0, 4:0}
+    x = []
+    y = []
+    for key, val in patient_type_idx.items():
+        x.append(key)
+        y.append(len(val))
+    in_data = list(zip(x, y))
+    plot_pie_charts(in_data)

@@ -64,6 +64,7 @@ for epoch in range(EPOCHS):
     optimizer.step()
     if (loss.item() < best_val_loss):
         best_model_wts = copy.deepcopy(rnn.state_dict())
+        best_val_loss = loss.item()
     if (epoch + 1) % 100 == 0:
         print("Epoch: {} | Loss: {:.5f}".format(epoch + 1, loss.item()))
         

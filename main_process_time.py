@@ -38,6 +38,7 @@ for key, val in patient_idx_locus.items():
                     date_num[date] = 1
                 else:
                      date_num[date] += 1
+
 date_num['1-13'] += 1
 date_num.pop(' -13')
 temp_list = sorted(date_num.items(), key=lambda e:e[0], reverse=False)
