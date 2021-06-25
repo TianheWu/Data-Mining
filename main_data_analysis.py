@@ -8,17 +8,18 @@ from sklearn.cluster import KMeans
 
 
 patient_idx_lat_lon = joblib.load('./patient/patient_idx_lat_lon.pkl')
+
 lat_lon_info = numpy.empty([0, 2])
 patient_idx_type = {}
-patient_type_idx = {0:[], 1:[], 2:[], 3:[], 4:[]}
-patient_type_min_idx = {0:0, 1:0, 2:0, 3:0, 4:0}
-patient_type_max_idx = {0:0, 1:0, 2:0, 3:0, 4:0}
+patient_type_idx = {0:[], 1:[], 2:[], 3:[]}
+patient_type_min_idx = {0:0, 1:0, 2:0, 3:0}
+patient_type_max_idx = {0:0, 1:0, 2:0, 3:0}
 
 for key, val in patient_idx_lat_lon.items():
     temp_lat_lon = numpy.array(val).reshape(1, 2)
     lat_lon_info = numpy.concatenate((lat_lon_info, temp_lat_lon), axis=0)
 
-k_means = KMeans(n_clusters=5, random_state=None).fit(lat_lon_info)
+k_means = KMeans(n_clusters=4, random_state=None).fit(lat_lon_info)
 y_pred = k_means.predict(lat_lon_info)
 visualization_kmeans(lat_lon_info, y_pred, k_means)
 centers = k_means.cluster_centers_

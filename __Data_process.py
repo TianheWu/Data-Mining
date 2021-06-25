@@ -1,15 +1,16 @@
 from folium.vector_layers import path_options
-import jieba
+# import jieba
 import requests
 import json
 import joblib
+import numpy
 
 from __Parameters import *
 
 
-def participle(text_string):
-    seg_list = jieba.cut(text_string)
-    print(", ".join(seg_list))
+# def participle(text_string):
+#     seg_list = jieba.cut(text_string)
+#     print(", ".join(seg_list))
 
 
 def check_patient_location(patient_idx_info):
@@ -54,6 +55,12 @@ def get_min_val(set_idx):
 
 def get_max_val(set_idx):
     return max(set_idx)
+
+
+def polynomial_fitting(x, y):
+    ans = numpy.polyfit(x, y, 3)
+    p = numpy.poly1d(ans)
+    return p
 
 
 def modify_special_location(patient_idx_info):
@@ -128,6 +135,8 @@ def modify_wrong_lat_lon(patient_idx_lat_lon):
     patient_idx_lat_lon.pop('744')
     patient_idx_lat_lon.pop('529')
     patient_idx_lat_lon.pop('316')
+    patient_idx_lat_lon.pop('52')
+
 
 
 

@@ -4,10 +4,10 @@ import joblib
 from __Parameters import *
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import MultipleLocator
-from pyecharts.charts import Bar
-from pyecharts.charts import Line
-from pyecharts import options as opts
-from pyecharts.charts import Pie
+# from pyecharts.charts import Bar
+# from pyecharts.charts import Line
+# from pyecharts import options as opts
+# from pyecharts.charts import Pie
 
 
 def get_type_icon_color(type):
@@ -80,7 +80,10 @@ def visualization_kmeans(x, y, k_means):
     plt.scatter(x[:, 0], x[:, 1], c=y, cmap='viridis')
     centers = k_means.cluster_centers_
     plt.scatter(centers[:, 0], centers[:, 1], c='red', s=20, alpha=0.5)
-    plt.savefig('./figure/map_KMeans.png')
+    plt.xlabel('latitude')
+    plt.ylabel('longitude')
+    # plt.savefig('./figure/map_KMeans.png')
+    plt.show()
 
 
 def visualization_acc(pred_test, train_data):
@@ -90,29 +93,37 @@ def visualization_acc(pred_test, train_data):
     plt.savefig('./figure/acc.png')
 
 
-def plot_line_picture(x_info, y_info):
-    line_plot = (
-        Line()
-        .add_xaxis(x_info)
-        .add_yaxis('People num', y_info, is_smooth=True, 
-                    linestyle_opts=opts.LineStyleOpts(color='red', width=4),
-                    markline_opts=opts.MarkLineOpts(data=[opts.MarkLineItem(type_='average')]))
-        .set_global_opts(title_opts=opts.TitleOpts(title='Line of the number in the epidemic', subtitle="2020 year", 
-    )))
-    line_plot.render(path='./figure/num_line.html')
+def visualization_fit(x, y, pred_y):
+    plt.plot(x, y, '*', label='original values')
+    plt.plot(x, pred_y, 'r', label='polyfit values')
+    plt.legend()
+    plt.show()
+    # plt.savefig('./figure/fit.png')
 
 
-def plot_pie_charts(data):
-    pie = Pie()
-    pie.add(
-        series_name="Number",
-        data_pair=data,
-        radius=["30%", "70%"],
-    )
-    pie.set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {d}%"))
-    pie.set_global_opts(title_opts=opts.TitleOpts(title="Distribution of people"))
-    pie.render_notebook()
-    pie.render(path='./figure/pie.html')
+# def plot_line_picture(x_info, y_info):
+#     line_plot = (
+#         Line()
+#         .add_xaxis(x_info)
+#         .add_yaxis('People num', y_info, is_smooth=True,
+#                     linestyle_opts=opts.LineStyleOpts(color='red', width=4),
+#                     markline_opts=opts.MarkLineOpts(data=[opts.MarkLineItem(type_='average')]))
+#         .set_global_opts(title_opts=opts.TitleOpts(title='Line of the number in the epidemic', subtitle="2020 year",
+#     )))
+#     line_plot.render(path='./figure/num_line.html')
+#
+#
+# def plot_pie_charts(data):
+#     pie = Pie()
+#     pie.add(
+#         series_name="Number",
+#         data_pair=data,
+#         radius=["30%", "70%"],
+#     )
+#     pie.set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {d}%"))
+#     pie.set_global_opts(title_opts=opts.TitleOpts(title="Distribution of people"))
+#     pie.render_notebook()
+#     pie.render(path='./figure/pie.html')
 
 
 if __name__ == '__main__':
